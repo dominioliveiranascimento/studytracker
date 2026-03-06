@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyTracker</title>
+</head>
+<body>
+    <header>
+        <h1>StudyTracker</h1>
+        <p>Registrar sessão de estudo</p>
+    </header>
+    <main>
+        <form action="/save" method="POST">
+
+                <label for="materia">Matéria</label>
+                <input type="text" name="materia" id="materia" required>
+
+                <br><br>
+
+                <label for="tempo">Tempo estudado(minutos)</label>
+                <input type="number" name="tempo" id="tempo" required>
+
+                <br><br>
+
+                <label for="data">Data de estudo</label>
+                <input type="date" name="data" id="data" required>
+
+                <br><br>
+
+            <button type="submit">Salvar</button>
+
+        </form>
+
+        <br>
+        <a href="/history">Ver histórico de estudos</a>
+
+
+    </main>
+</body>
+</html>

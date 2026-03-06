@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Estudos</title>
+</head>
+<body>
+    <header>
+        <h1>Histórico de Estudos</h1>
+    </header>
+    
+<table>
+
+    <tr>
+        <th>Matéria</th>
+        <th>Tempo(min)</th>
+        <th>Data</th>
+    </tr>
+
+{%for estudo in dados %}
+
+<tr>
+    <td>{{estudo [1] }}</td>
+    <td>{{estudo [2]}}</td>
+    <td>{{estudo [3]}}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+<br>
+<a href="/">Voltar</a>
+
+</body>
+</html>
