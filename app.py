@@ -56,5 +56,48 @@ def historico():
 
     return render_template("history.html", dados=dados)
 
+
+@app.route("/delete/<int:id>", methods=["POST"])
+def deletar(id):
+    conexao = sqlite3.connect("meu_banco.db")
+    cursor = conexao.cursor()
+
+    cursor.execute("DELETE FROM estudos WHERE id = ?", (id,))
+
+    conexao.commit()
+    conexao.close()
+
+    return redirect("/history")
+
+
+@app.route("/edit/<int:id>", methods=["GET", "POST"])
+def editar(id):
+    
+    conexao = sqlite3.connect("meu_banco.db")
+    cursor = conexao.cursor()
+
+    if request.method == "POST":
+        materia = request.form.get("materia")
+        tempo = request.form.get("tempo")
+        data = request.form.get("data")
+
+        cursor.execute("""
+            UPDATE estudos 
+            SET materia = ?, tempo = ?, data = ?
+            WHERE id = ?
+""", (materia, tempo, data, id))
+
+        conexao.commit()
+        conexao.close()
+
+        return redirect("/history")
+    
+    cursor.execute("SELECT * FROM estudos WHERE id = ?", (id,))
+    estudo = cursor.fetchone()
+
+    conexao.close
+
+    return render_template("edit.html", estudo=estudo)
+
 if __name__ == "__main__":
     app.run(debug=True)

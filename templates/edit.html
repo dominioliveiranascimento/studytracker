@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Sessão</title>
+</head>
+<body>
+
+    <h1>Editar Sessão</h1>
+
+    <form method="POST">
+
+    <label>Matéria</label>
+    <input type="text" name="materia" id="{{ estudo[1] }}" required>
+
+    <br><br>
+
+    <label>Tempo</label>
+    <input type="number" name="tempo" id="{{ estudo[2] }}" required>
+
+    <br><br>
+
+    <label>Data</label>
+    <input type="date" name="data" id=" {{estudo[2] }}" required>
+
+    <br><br>
+    
+    <button type="submit">Salvar alterações</button>
+
+    </form>
+
+<br>
+<a href="/history">Voltar</a>
+
+</body>
+</html>

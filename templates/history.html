@@ -26,12 +26,27 @@
     <td>{{estudo [3]}}</td>
 </tr>
 
+
+<td>
+    <a href="/edit/{{ estudo[0] }}">Editar</a>
+
+</td>
+
+<td>
+    <form action="/delete/{{ estudo[0]}}" method="POST">
+        <button type="submit">Excluir</button>
+    </form>
+</td>
+
+
+
 {% endfor %}
 
 </table>
 
 <br>
 <a href="/">Voltar</a>
+
 
 </body>
 </html>
