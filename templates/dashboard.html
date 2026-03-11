@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Tempo</title>
+</head>
+<body>
+    <header>
+    <h1>Visão Geral</h1>
+    </header>
+    <br>
+    
+    <h2><p>Tempo total estudado: {{ tempo_total }} minutos</p></h2>
+
+    <h2><p>Total de sessões: {{ total_sessoes }}</p></h2>
+
+    <p><h2>Matérias mais estudadas</h2></p>
+
+    {% if materias_top %}
+        {% for materia in materia_top %}
+            <li>{{ materia[0] }} - {{ materia[1] }} minutos</li>
+        {% endfor %}
+    {% else %}
+        <p>Nenhuma sessão registrada ainda.</p>
+    {% endif %}
+
+    <br><br>
+
+
+    <h2>Contador de Estudo</h2>
+    <h2 id="timer">00:00:00</h2>
+
+
+    <p id="msg"></p>
+
+    <button id="start">Iniciar</button>
+    <button id="stop">Finalizar</button>
+
+    <br>
+
+    <a href="/">Registrar estudo</a>
+    <a href="/history">Ver histórico</a>
+    <a href="/logout">Logout</a>
+
+    <script src="{{ url_for('static', filename='js/timer.js')}}"></script>
+    
+</body>
+</html>

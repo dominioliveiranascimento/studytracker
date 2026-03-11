@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, redirect, session
 import sqlite3
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 
 app = Flask(__name__)
 app.secret_key = "737373"
@@ -95,6 +98,51 @@ def historico():
     return render_template("history.html", dados=dados)
 
 
+@app.route("/dashboard")
+def dashboard():
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    user_id = session["user_id"]
+
+    conexao = sqlite3.connect("meu_banco.db")
+    cursor = conexao.cursor()
+    cursor.execute(
+        "SELECT SUM(tempo) FROM estudos WHERE user_id = ?",
+        (user_id,)
+    )
+
+    tempo_total = cursor.fetchone()[0] or 0
+
+    cursor.execute(
+        "SELECT COUNT(*) FROM estudos WHERE user_id = ?",
+        (user_id,)
+    )
+
+    total_sessoes = cursor.fetchone()[0]
+    cursor.execute("""
+        SELECT materia, SUM(tempo) as total
+        FROM estudos
+        WHERE user_id = ? 
+        GROUP BY materia 
+        ORDER BY total DESC 
+        LIMIT 3
+""", (user_id,))
+    
+    materia_top = cursor.fetchall()
+
+    conexao.close()
+
+    return render_template(
+        "dashboard.html",
+        tempo_total = tempo_total,
+        total_sessoes = total_sessoes,
+        materia_top = materia_top
+)
+
+
+
 @app.route("/delete/<int:id>", methods=["POST"])
 def deletar(id):
 
@@ -152,12 +200,13 @@ def register():
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+        senha_hash = generate_password_hash(password)
 
         conexao = sqlite3.connect("meu_banco.db")
         cursor = conexao.cursor()
 
         cursor.execute("INSERT INTO usuarios (username, password) VALUES (?, ?)",
-         (username, password))
+         (username, senha_hash))
 
         conexao.commit()
         conexao.close()
@@ -178,14 +227,14 @@ def login():
         cursor = conexao.cursor()
 
         cursor.execute(
-            "SELECT * FROM usuarios WHERE username = ? AND PASSWORD = ?", (username, password)
+            "SELECT * FROM usuarios WHERE username = ?", (username,)
         )
 
         usuario = cursor.fetchone()
 
         conexao.close()
 
-        if usuario:
+        if usuario and check_password_hash(usuario[2], password):
             session["user_id"] = usuario[0]
             return redirect("/")
         
