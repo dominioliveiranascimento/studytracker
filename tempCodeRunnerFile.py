@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, session, jsonify
+from flask import Flask, render_template, request, redirect, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
-import datetime
 
 
 
@@ -143,32 +142,6 @@ def dashboard():
 )
 
 
-@app.route("/save-timer", methods=["POST"])
-def save_timer():
-    data = request.get_json()
-
-    tempo = data["tempo"]
-
-    materia = "Timer"
-
-    user_id = session["user_id"]
-
-    hoje = datetime.date.today()
-
-    conexao = sqlite3.connect("meu_banco.db")
-    cursor = conexao.cursor()
-
-
-    cursor.execute("""
-        INSERT INTO estudos (user_id, materia, tempo, data)
-        VALUE (?, ?, ?, ?)
-""", (user_id, materia, tempo, hoje))
-    
-
-    conexao.commit()
-    conexao.close()
-
-    return jsonify({"status": "ok"})
 
 @app.route("/delete/<int:id>", methods=["POST"])
 def deletar(id):

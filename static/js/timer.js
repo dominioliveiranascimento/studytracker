@@ -52,6 +52,18 @@ document.getElementById("stop").onclick = function () {
 
         document.getElementById("msg").innerText = 
         "Parabéns! Seu tempo de estudo foi de " + finalTime
+
+        let minutos = Math.floor(seconds / 60)
+
+        fetch("/save-timer", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                tempo: minutos
+            })
+        })
     }
 
 }
