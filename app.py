@@ -7,8 +7,13 @@ import os
 app = Flask(__name__)
 app.secret_key = "737373"
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "meu_banco.db")
+
+conexao = sqlite3.connect(DB_PATH)
+
 def criar_tabela():
-    conexao = sqlite3.connect("meu_banco.db")
+    conexao = sqlite3.connect("DB_PATH")
     cursor = conexao.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS estudos (
@@ -23,7 +28,7 @@ def criar_tabela():
     conexao.close()
 
 def criar_tabela_usuarios():
-    conexao = sqlite3.connect("meu_banco.db")
+    conexao = sqlite3.connect("DB_PATH")
     cursor = conexao.cursor()
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS usuarios(
@@ -56,7 +61,7 @@ def salvar_dados():
     tempo = request.form.get("tempo")
     data = request.form.get("data")
 
-    conexao = sqlite3.connect("meu_banco.db")
+    conexao = sqlite3.connect("DB_PATH")
     cursor = conexao.cursor()
 
 
@@ -78,7 +83,7 @@ def historico():
     if "user_id" not in session:
         return redirect("/login")
     
-    conexao = sqlite3.connect("meu_banco.db")
+    conexao = sqlite3.connect("DB_PATH")
     cursor = conexao.cursor()
 
     user_id = session["user_id"]
@@ -102,7 +107,7 @@ def dashboard():
 
     user_id = session["user_id"]
 
-    conexao = sqlite3.connect("meu_banco.db")
+    conexao = sqlite3.connect("DB_PATH")
     cursor = conexao.cursor()
     cursor.execute(
         "SELECT SUM(tempo) FROM estudos WHERE user_id = ?",
