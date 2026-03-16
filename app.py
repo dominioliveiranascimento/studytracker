@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, session, jsonify
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
+import os
 
 app = Flask(__name__)
 app.secret_key = "737373"
@@ -274,5 +275,8 @@ def logout():
     return redirect("/login")
 
 
+PORT = int(os.environ.get("PORT", 5000))
+    
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=PORT)
+    
