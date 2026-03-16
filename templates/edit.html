@@ -4,34 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Sessão</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
-<body>
 
-    <h1>Editar Sessão</h1>
+<body class="edit-page">
+    
+    <header class="text-center mt-5" style="max-width:500px;">
+        <h1>Editar Sessão</h1>
+    </header>
 
-    <form method="POST">
+        <form class="card p-4 shadow" method="POST">
 
-    <label>Matéria</label>
-    <input type="text" name="materia" id="{{ estudo[1] }}" required>
-
-    <br><br>
-
-    <label>Tempo</label>
-    <input type="number" name="tempo" id="{{ estudo[2] }}" required>
+            <label class="form-label">Matéria</label>
+            <input type="text" name="materia" value="{{ estudo[2] }}" required>
 
     <br><br>
 
-    <label>Data</label>
-    <input type="date" name="data" id=" {{estudo[2] }}" required>
+            <label class="form-label">Tempo</label>
+            <input type="number" name="tempo" value="{{ estudo[3] }}" required>
+
+    <br><br>
+
+            <label class="form-label">Data</label>
+            <input type="date" name="data" value="{{ estudo[4] }}" required>
 
     <br><br>
     
-    <button type="submit">Salvar alterações</button>
+    <button class="btn btn-primary" type="submit">Salvar alterações</button>
 
-    </form>
+        </form>
 
 <br>
-<a href="/history">Voltar</a>
+<a class="btn btn-outline-secondary btn-voltar" href="/history">Voltar</a>
 
 </body>
 </html>

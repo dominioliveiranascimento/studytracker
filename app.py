@@ -3,8 +3,6 @@ import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
 
-
-
 app = Flask(__name__)
 app.secret_key = "737373"
 
@@ -26,17 +24,14 @@ def criar_tabela():
 def criar_tabela_usuarios():
     conexao = sqlite3.connect("meu_banco.db")
     cursor = conexao.cursor()
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS usuarios(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT UNIQUE, 
             password TEXT)
 """)
-    
     conexao.commit()
     conexao.close()
-
 
 criar_tabela()
 criar_tabela_usuarios()
@@ -98,7 +93,6 @@ def historico():
 
     return render_template("history.html", dados=dados)
 
-
 @app.route("/dashboard")
 def dashboard():
 
@@ -142,7 +136,6 @@ def dashboard():
         materia_top = materia_top
 )
 
-
 @app.route("/save-timer", methods=["POST"])
 def save_timer():
     data = request.get_json()
@@ -161,7 +154,7 @@ def save_timer():
 
     cursor.execute("""
         INSERT INTO estudos (user_id, materia, tempo, data)
-        VALUE (?, ?, ?, ?)
+        VALUES (?, ?, ?, ?)
 """, (user_id, materia, tempo, hoje))
     
 
@@ -189,7 +182,6 @@ def deletar(id):
 
     return redirect("/history")
 
-
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def editar(id):
 
@@ -207,7 +199,7 @@ def editar(id):
         cursor.execute("""
             UPDATE estudos 
             SET materia = ?, tempo = ?, data = ?
-            WHERE id ? = AND user_id = ?
+            WHERE id = ? AND user_id = ?
 """, (materia, tempo, data, id, session["user_id"]))
 
         conexao.commit()
@@ -229,17 +221,23 @@ def register():
         password = request.form.get("password")
         senha_hash = generate_password_hash(password)
 
-        conexao = sqlite3.connect("meu_banco.db")
-        cursor = conexao.cursor()
+        try:
+            conexao = sqlite3.connect("meu_banco.db")
+            cursor = conexao.cursor()
 
-        cursor.execute("INSERT INTO usuarios (username, password) VALUES (?, ?)",
-         (username, senha_hash))
+            cursor.execute(
+                "INSERT INTO usuarios (username, password) VALUES (?, ?)",
+                (username, senha_hash)
+            )
 
-        conexao.commit()
-        conexao.close()
+            conexao.commit()
+            conexao.close()
 
-        return redirect("/login")
-
+            return redirect("/login")
+        
+        except sqlite3.IntegrityError:
+            conexao.close()
+            return render_template("register.html", erro="Esse usuário já existe.")
 
     return render_template("register.html")
 
@@ -269,7 +267,6 @@ def login():
             return "Usuário ou senha inválidos"
         
     return render_template("login.html")
-
 
 @app.route("/logout")
 def logout():

@@ -2,35 +2,55 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=[device-width], initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
+
+    
 </head>
-<body>
-    <header>
+
+<body class="login-page">
+
+    <header class="text-center mt-5">
         <h1>Login</h1>
     </header>
 
-    <main>
-        <form action="/login" method="POST">
+    <main class="container mt-4" style="max-width:400px;">
 
-        <label for="username">Usuário</label>
-        <input type="text" name="username" id="username" required>
-        
-        <br><br>
+        <div class="card p-4">
 
-        <label for="password">Senha</label>
-        <input type="password" name="password" id="password" required>
+            <form action="/login" method="POST">
 
-        <br><br>
+                <div class="mb-3">
+                    <label class="form-label">Usuário</label>
+                    <input class="form-control" type="text" name="username" required>
+                </div>
 
-        <button type="submit">Entrar</button>
+                <div class="mb-3">
+                    <label class="form-label">Senha</label>
+                    <input class="form-control" type="password" name="password" required>
+                </div>
 
-        </form>
+                <button class="btn btn-primary w-100">
+                    Entrar
+                </button>
 
-        <a href="/register">Criar conta</a>
+            </form>
+
+            <hr>
+
+            <a class="btn btn-outline-secondary w-100" href="/register">
+                Criar conta
+            </a>
+
+        </div>
 
     </main>
-
 
 </body>
 </html>

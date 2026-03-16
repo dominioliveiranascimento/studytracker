@@ -4,38 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyTracker</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 </head>
+</head>
+
 <body>
-    <header>
-        <h1>StudyTracker</h1>
-        <p>Registrar sessão de estudo</p>
-    </header>
-    <main>
+
+<div class="container mt-5">
+
+    <div class="card p-4">
+
+        <h1 class="text-center">StudyTracker</h1>
+        <p class="text-center">Registrar sessão de estudo</p>
+
         <form action="/save" method="POST">
 
-                <label for="materia">Matéria</label>
-                <input type="text" name="materia" id="materia" required>
+            <div class="mb-3">
+                <label class="form-label">Matéria</label>
+                <input class="form-control" type="text" name="materia" required>
+            </div>
 
-                <br><br>
+            <div class="mb-3">
+                <label class="form-label">Tempo estudado (minutos)</label>
+                <input class="form-control" type="number" name="tempo" required>
+            </div>
 
-                <label for="tempo">Tempo estudado(minutos)</label>
-                <input type="number" name="tempo" id="tempo" required>
+            <div class="mb-3">
+                <label class="form-label">Data de estudo</label>
+                <input class="form-control" type="date" name="data" required>
+            </div>
 
-                <br><br>
-
-                <label for="data">Data de estudo</label>
-                <input type="date" name="data" id="data" required>
-
-                <br><br>
-
-            <button type="submit">Salvar</button>
+            <button class="btn btn-primary w-100" type="submit">
+                Salvar
+            </button>
 
         </form>
 
-        <br>
-        <a href="/history">Histórico de estudos</a>
-        <a href="/logout">Logout</a>
-        <a href="/dashboard">Meu tempo</a>
-    </main>
+        <hr>
+
+        <div class="d-flex justify-content-between">
+
+            <a class="btn btn-outline-secondary" href="/history">
+                Histórico
+            </a>
+
+            <a class="btn btn-outline-info" href="/dashboard">
+                Meu tempo
+            </a>
+
+            <a class="btn btn-outline-danger" href="/logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

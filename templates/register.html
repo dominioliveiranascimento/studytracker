@@ -4,30 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Criar Conta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
 </head>
-<body>
-    <header>
+
+<body class="register-page">
+
+    <header class="text-center mt-5">
         <h1>Criar Conta</h1>
     </header>
 
-    <main>
-        <form action="register" method="POST">
-            <label for="username">Usuário</label>
-            <input type="text" name="username" id="username" required>
+    <main class="container mt-4" style="max-width:400px;">
+
+            {% if erro %}
+            <div class="alert alert-danger">
+                {{ erro }}
+            </div>
+            {% endif %}
+
+        <div class="card p-4">
+
+        <form action="/register" method="POST">
+
+            <div class="mb-3">
+                <label class="form-label" for="username">Usuário</label>
+                <input class="form-control" type="text" name="username" id="username" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label" for="password">Senha</label>
+                <input class="form-control" type="password" name="password" id="password" required>
+            </div>
 
             <br><br>
 
-            <label for="password">Senha</label>
-            <input type="password" name="password" id="password" required>
-
-            <br><br>
-
-            <button type="submit">Cadastrar</button>
+            <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
 
         </form>
 
+        <hr>
 
-        <a href="/login">Já tem uma conta? Faça login aqui.</a>
+        <a href="/login" class="btn btn-outline-secondary w-100">
+            Já tem uma conta? Faça login aqui.
+        </a>
         
     </main>
     
